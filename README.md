@@ -79,3 +79,50 @@ After the for loop, compress and archive the files, using the $toBackup array of
 
 ### Task 13
 Now the file $backupFileName is created in the current working directory. Move the file backupFileName to the destination directory located at destAbsPath.
+
+### Task 14
+Save the file you’re working on (backup.sh) and make it executable.
+Use the chmod command with the correct options
+
+Verify the file is executable using the ls command with the -l option:
+ls -l backup.sh
+Take a screenshot of the output of the command above and save as 15-executable.jpg (or .png)
+
+### Task 15
+Download the following zip file with the wget command:
+wget https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-LX0117EN-SkillsNetwork/labs/Final%20Project/important-documents.zip
+
+Unzip the archive file:
+unzip -DDo important-documents.zip
+(-DDo to overwrite and not restore original modified date)
+
+Update the file’s last modified date to now:
+
+touch important-documents/*
+Test your script using the following command:
+
+./backup.sh important-documents .
+This should have created a file called backup-[CURRENT_TIMESTAMP].tar.gz in your current directory
+
+Take a screenshot of the output of ls -l and save as 16-backup-complete.jpg (or .png)
+
+### Task 16
+Copy (don’t mv) the backup.sh script into the /usr/local/bin/ directory.
+
+Note: You may need to use sudo cp in order to create a file in /usr/local/bin/
+Test the cronjob to see if the backup script is getting triggered by scheduling it for every 1 minute.
+
+*/1 * * * * /usr/local/bin/backup.sh /home/project/important-documents /home/project
+Please note that since the Theia Lab is a virtual environment, we need to explicitly start the cron service using the below command.
+
+sudo service cron start
+Once the cron service is started, please check in the directory (/home/project) if the tar files are getting created.
+
+If yes, then please stop the cron service using the below command, else it will continue to create tar files every minute.
+
+sudo service cron stop
+Using crontab, schedule your /usr/local/bin/backup.sh script to backup the important-documents folder every 24 hours to the directory (/home/project).
+
+Take a screenshot of the output of crontab -l and save as 17-crontab.jpg (or .png)
+
+Ensure the cron service is running or start the cron service if need be, when you are setting up cron jobs in a real-life scenario.
